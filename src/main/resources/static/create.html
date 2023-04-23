@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建订单</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <div id="1">
+        商品名称<input id = "name"><br>
+        数量<input id = "count"><br>
+        单价<input id = "price"><br>
+        地址<input id = "address"><br>
+        <button onclick="create()"> 提交</button>
+
+    </div>
+    <script>
+
+        function create() {
+            let name = jQuery("#name").val();
+            let count = jQuery("#count").val();
+            let price = jQuery("#price").val();
+            let address = jQuery("#address").val();
+            console.log('{' +
+                '  "code": "0",' +
+                '  "name": "'+name+'",' +
+                '  "count": "'+count+'",' +
+                '  "price": "'+price+'",' +
+                '  "address": "'+address+'"' +
+                '}')
+            $.ajax(
+             {
+                 type: "Post",
+                 url: "http://localhost:8080/new",
+                 data:'{' +
+                     '  "code": "0",' +
+                     '  "status": "未处理",' +
+                     '  "name": "'+name+'",' +
+                     '  "count": "'+count+'",' +
+                     '  "price": "'+price+'",' +
+                     '  "address": "'+address+'"' +
+                     '}',
+                 success: function(data){
+                     alert(data)
+                 },
+                 headers: { 'content-type': 'application/json '},
+                 contentType:"application/json",
+             }
+         )
+        }
+    </script>
+</body>
+</html>

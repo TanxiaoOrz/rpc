@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>查看订单</title>
+</head>
+<body>
+<table border="1" id="show">
+    <tr>
+        <td>编号</td>
+        <td>商品名称</td>
+        <td>数量</td>
+        <td>单价</td>
+        <td>地址</td>
+        <td>状态</td>
+    </tr>
+</table>
+<script>
+    $.ajax(
+        {
+            type: "Get",
+            url: "http://localhost:8080/all",
+            success: function(data){
+                let show = document.getElementById("show").innerHTML;
+                console.log(data)
+                data.forEach((order)=>{
+                    show += `<tr>
+                        <td>${order.code}</td>
+                        <td>${order.name}</td>
+                        <td>${order.count}</td>
+                        <td>${order.price}</td>
+                        <td>${order.address}</td>
+                        <td>${order.status}</td>
+                        </tr>`
+                })
+                document.getElementById("show").innerHTML = show
+            },
+            headers: { 'content-type': 'application/json '},
+            contentType:"application/json",
+        }
+    )
+</script>
+</body>
+</html>
