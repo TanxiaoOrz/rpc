@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <div id="1">
+        订单编号<input id = "code"><br>
+        商品名称<input id = "name"><br>
+        数量<input id = "count"><br>
+        单价<input id = "price"><br>
+        地址<input id = "address"><br>
+        <button onclick="create()"> 提交</button>
+
+    </div>
+    <script>
+
+        function create() {
+            $.ajax(
+             {
+                 type: "Delete",
+                 url: "http://localhost:8080/submit",
+                 data:'{' +
+                     '  "mid": "1",' +
+                     '  "out": 0' +
+                     '}',
+                 success: function(data){
+                     alert(data.status);
+                     alert(data.description)
+                 },
+                 headers: { 'content-type': 'application/json ','token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoxLCJleHAiOjE2ODEyMjU0NjQsInVzZXItYWdlbnQiOiIwOjA6MDowOjA6MDowOjEifQ.6VGMhxguJ7vD-IN-GMG-weTMt82kJ7Qg2lXe12jTylo'},
+                 contentType:"application/json",
+             }
+         )
+        }
+    </script>
+</body>
+</html>
