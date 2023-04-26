@@ -31,25 +31,29 @@ public class ActiveMQConfig {
     @Value("${spring.activemq.queue-name}")
     private String queueName;
 
-    @Bean(name = "queue")
-    public Queue queue() {
+    @Bean(name = "queue1")
+    public Queue queue1() {
         return new ActiveMQQueue(queueName);
     }
 
+    @Bean(name = "queue2")
+    public Queue queue2() {
+        return new ActiveMQQueue(queueName + "return");
+    }
+
     @Bean
-    public ConnectionFactory connectionFactory(){
+    public ConnectionFactory connectionFactory() {
         return new ActiveMQConnectionFactory(userName, password, brokerUrl);
     }
 
     // 在Queue模式中，对消息的监听需要对containerFactory进行配置
     @Bean("queueListener")
-    public JmsListenerContainerFactory<?> queueJmsListenerContainerFactory(ConnectionFactory connectionFactory){
+    public JmsListenerContainerFactory<?> queueJmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setPubSubDomain(false);
         return factory;
     }
-
 
     @Bean
     JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
@@ -58,7 +62,7 @@ public class ActiveMQConfig {
         return jmsTemplate;
     }
 
-    @Bean(value="jmsMessagingTemplate")
+    @Bean(value = "jmsMessagingTemplate")
     JmsMessagingTemplate jmsMessagingTemplate(JmsTemplate jmsTemplate) {
         JmsMessagingTemplate messagingTemplate = new JmsMessagingTemplate(jmsTemplate);
         return messagingTemplate;
